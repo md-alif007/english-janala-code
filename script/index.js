@@ -4,6 +4,29 @@ const loadLessons = () => {
         .then(data => displayLessons(data.data))
 }
 
+const loadLessonByLevel = (id) => {
+    const url = `https://openapi.programming-hero.com/api/level/${id}`
+    fetch(url)
+        .then(res => res.json())
+        .then(data => displayLessonByLevel(data.data))
+}
+
+const displayLessonByLevel = (words) => {
+    const levelWordContainer = document.getElementById("level-Word-container");
+    // levelWordContainer.innerHTML = "";
+
+    words.forEach(word => {
+        // console.log(word);
+        const card = document.createElement("div");
+        card.innerHTML =
+            `
+        
+        `
+
+        levelWordContainer.append(card);
+    });
+}
+
 const displayLessons = (lessons) => {
     const levelContainer = document.getElementById("level-container");
     levelContainer.innerHTML = "";
@@ -11,8 +34,8 @@ const displayLessons = (lessons) => {
     for (let lesson of lessons) {
         const btnDiv = document.createElement("div");
         btnDiv.innerHTML =
-        `
-            <button class="btn btn-outline btn-primary">
+            `
+            <button onclick="loadLessonByLevel(${lesson.level_no})" class="btn btn-outline btn-primary">
                 <i 
                     class="fa-solid fa-book">
                 </i>
