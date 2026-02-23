@@ -13,13 +13,46 @@ const loadLessonByLevel = (id) => {
 
 const displayLessonByLevel = (words) => {
     const levelWordContainer = document.getElementById("level-Word-container");
-    // levelWordContainer.innerHTML = "";
+    levelWordContainer.innerHTML = "";
+
+    if (words.length == 0) {
+        levelWordContainer.innerHTML =
+            `
+                <div class="col-span-full ">
+                    <p class="font-bangla text-center ">এই Lesson এ এখনো কোন Vocabulary যুক্ত করা হয়নি</p>
+                    <h2 class="font-bangla font-semibold text-4xl text-center mt-3">নেক্সট Lesson এ যান</h2>
+                </div>
+            `
+        return;
+    }
 
     words.forEach(word => {
-        // console.log(word);
+        console.log(word);
         const card = document.createElement("div");
+
+        // {
+        //     "id": 5,
+        //         "level": 1,
+        //             "word": "Eager",
+        //                 "meaning": "আগ্রহী",
+        //                     "pronunciation": "ইগার"
+        // }
+
+
         card.innerHTML =
             `
+            <div class="bg-white rounded-xl shadow-sm text-center py-5 px-5 space-y-3">
+                <h2 class="font-bold text-2xl">${word.word ? word.word : "শব্দ পাওয়া যায় নি"}</h2>
+                <p class="font-semibold text-xl">Meaning /Pronounciation</p>
+                <div class="font-bangla font-bold text-2xl">
+                    "${word.meaning ? word.meaning : "পাওয়া যায় নি"} / 
+                    ${word.pronunciation ? word.pronunciation : "পাওয়া যায় নি"}"
+                </div>
+                <div class="flex justify-between items-center">
+                    <button class="btn bg-[#1A91FF20]"><i class="fa-solid fa-circle-info"></i></button>
+                    <button class="btn bg-[#1A91FF20]"><i class="fa-brands fa-itunes-note"></i></button>
+                </div>
+            </div>
         
         `
 
