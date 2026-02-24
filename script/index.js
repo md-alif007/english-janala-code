@@ -4,11 +4,21 @@ const loadLessons = () => {
         .then(data => displayLessons(data.data))
 }
 
+const removeActive = () => {
+    const lessonBtns = document.querySelectorAll(".lesson-btn");
+    lessonBtns.forEach(btn => btn.classList.remove("active"));
+}
+
 const loadLessonByLevel = (id) => {
     const url = `https://openapi.programming-hero.com/api/level/${id}`
     fetch(url)
         .then(res => res.json())
-        .then(data => displayLessonByLevel(data.data))
+        .then(data => {
+            removeActive();
+            const clickedBtn = document.getElementById(`lesson-btn-${id}`);
+            clickedBtn.classList.add("active");
+            displayLessonByLevel(data.data);
+        })
 }
 
 const displayLessonByLevel = (words) => {
@@ -49,7 +59,7 @@ const displayLessonByLevel = (words) => {
                     ${word.pronunciation ? word.pronunciation : "পাওয়া যায় নি"}"
                 </div>
                 <div class="flex justify-between items-center">
-                    <button class="btn bg-[#1A91FF20]"><i class="fa-solid fa-circle-info"></i></button>
+                    <button onClick="my_modal_5.showModal()" class="btn bg-[#1A91FF20]"><i class="fa-solid fa-circle-info"></i></button>
                     <button class="btn bg-[#1A91FF20]"><i class="fa-brands fa-itunes-note"></i></button>
                 </div>
             </div>
@@ -68,7 +78,7 @@ const displayLessons = (lessons) => {
         const btnDiv = document.createElement("div");
         btnDiv.innerHTML =
             `
-            <button onclick="loadLessonByLevel(${lesson.level_no})" class="btn btn-outline btn-primary">
+            <button id="lesson-btn-${lesson.level_no}" onclick="loadLessonByLevel(${lesson.level_no})" class="btn btn-outline btn-primary lesson-btn">
                 <i 
                     class="fa-solid fa-book">
                 </i>
