@@ -21,6 +21,50 @@ const loadLessonByLevel = (id) => {
         })
 }
 
+const loadWordDetail = async (id) => {
+    const detailUrl = `https://openapi.programming-hero.com/api/word/${id}`;
+    const res = await fetch(detailUrl);
+    const details = await res.json();
+    displayWordDetails(details.data);
+}
+
+const displayWordDetails = (word) => {
+    const detailBox = document.getElementById("details-container");
+    detailBox.innerHTML =
+        `            
+            <div>
+                    <h2 class="text-2xl font-bold">
+                        ${word.word} (<i class="fa-solid fa-microscope"></i>:${word.pronunciation})
+                    </h2>
+                    <div class="space-y-3">
+                        <div>
+                            <h2 class="font-bold">
+                                Meaning
+                            </h2>
+                            <p>${word.meaning}</p>
+                        </div>
+                        <div>
+                            <h2 class="font-bold">
+                                Example
+                            </h2>
+                            <p>${word.sentence}</p>
+                        </div>
+                        <div>
+                            <h2 class="font-bold font-bangla">
+                                সমার্থক শব্দ গুলো
+                            </h2>
+                            <span class="btn">1</span>
+                            <span class="btn">2</span>
+                            <span class="btn">3</span>
+                        </div>
+
+                    </div>
+                </div>
+            
+        `
+    document.getElementById("my_modal_5").showModal();
+}
+
 const displayLessonByLevel = (words) => {
     const levelWordContainer = document.getElementById("level-Word-container");
     levelWordContainer.innerHTML = "";
@@ -59,7 +103,7 @@ const displayLessonByLevel = (words) => {
                     ${word.pronunciation ? word.pronunciation : "পাওয়া যায় নি"}"
                 </div>
                 <div class="flex justify-between items-center">
-                    <button onClick="my_modal_5.showModal()" class="btn bg-[#1A91FF20]"><i class="fa-solid fa-circle-info"></i></button>
+                    <button onClick="loadWordDetail(${word.id})" class="btn bg-[#1A91FF20]"><i class="fa-solid fa-circle-info"></i></button>
                     <button class="btn bg-[#1A91FF20]"><i class="fa-brands fa-itunes-note"></i></button>
                 </div>
             </div>
